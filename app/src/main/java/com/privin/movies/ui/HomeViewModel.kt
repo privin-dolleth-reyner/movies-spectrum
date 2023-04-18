@@ -1,9 +1,11 @@
 package com.privin.movies.ui
 
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.privin.movies.domain.GetMoviesPlayingNow
+import com.privin.movies.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,11 +18,12 @@ class HomeViewModel @Inject constructor(
         const val TAG = "HomeViewModel"
     }
 
-    fun loadData(){
-        Log.d(TAG, "loadData: ")
+    private val _nowPlayingMovies: MutableLiveData<List<Movie>> = MutableLiveData()
+    val nowPlayingMovies: LiveData<List<Movie>> = _nowPlayingMovies
+
+    fun loadNowPlaying(){
         viewModelScope.launch {
-            val size = getMoviesPlayingNow.get().execute().size
-            Log.d(TAG, "loadData: $size")
+            _nowPlayingMovies.postValue(getMoviesPlayingNow.get().execute())
         }
     }
 }
