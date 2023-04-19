@@ -2,8 +2,10 @@ package com.privin.movies.data.model
 
 import com.privin.movies.model.Movie
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 
+@JsonClass(generateAdapter = true)
 data class MovieResponse(
     @Json(name = "dates")
     var dates : Dates,
@@ -16,14 +18,14 @@ data class MovieResponse(
     @Json(name = "total_results")
     var totalResults : Long,
 )
-
+@JsonClass(generateAdapter = true)
 data class Dates(
     @Json(name = "maximum")
     var maximum : String,
     @Json(name = "minimum")
     var minimum : String,
 )
-
+@JsonClass(generateAdapter = true)
 data class MovieItem(
     @Json(name = "id")
     var id : Long,

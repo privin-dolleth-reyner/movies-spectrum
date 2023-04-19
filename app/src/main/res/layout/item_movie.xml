@@ -5,12 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     app:cardCornerRadius="8dp"
-    app:cardBackgroundColor="@color/purple_200"
     android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background"/>
 
         <TextView
             android:id="@+id/title"

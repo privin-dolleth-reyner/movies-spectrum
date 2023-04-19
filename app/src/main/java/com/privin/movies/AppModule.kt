@@ -5,6 +5,8 @@ import com.privin.movies.data.RepoImpl
 import com.privin.movies.data.remote.ApiClient
 import com.privin.movies.data.remote.Server
 import com.privin.movies.data.remote.ServerImpl
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,11 +25,12 @@ abstract class AppModule {
 
     companion object {
 
+        private const val PARAM_API_KEY = "api_key"
         private val authInterceptor = Interceptor{
             val req = it.request()
             val url = req.url
             val newUrl = url.newBuilder()
-                .addQueryParameter("api_key", BuildConfig.API_KEY)
+                .addQueryParameter(PARAM_API_KEY, BuildConfig.API_KEY)
                 .build()
             val newRequest = req.newBuilder()
                 .url(newUrl)
@@ -48,11 +51,19 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideRetrofit(client: OkHttpClient): Retrofit {
+        fun provideMoshi(): Moshi {
+            return Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build()
+        }
+
+        @Provides
+        @Singleton
+        fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(client)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
         }
 

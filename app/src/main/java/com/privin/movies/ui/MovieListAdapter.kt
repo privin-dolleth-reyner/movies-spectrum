@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.privin.movies.databinding.ItemMovieBinding
 import com.privin.movies.model.Movie
 
@@ -44,7 +45,16 @@ class MovieListAdapter constructor(
     }
 
     class MovieView constructor(val binding: ItemMovieBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
+            fun setBackDrop(url: String?){
+                if (url == null) return
+                binding.apply {
+                    Glide.with(root.context)
+                        .load(url)
+                        .into(backdrop)
+                }
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieView {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -61,5 +71,6 @@ class MovieListAdapter constructor(
         holder.binding.apply {
             title.text = movie.title
         }
+        holder.setBackDrop(movie.getBackDropUrl())
     }
 }
