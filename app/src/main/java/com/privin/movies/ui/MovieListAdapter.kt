@@ -21,6 +21,12 @@ class MovieListAdapter constructor(
         diffResult.dispatchUpdatesTo(this)
     }
 
+    fun addMovieList(list: List<Movie>){
+        val insertedPosition = movies.size
+        movies.addAll(list)
+        notifyItemInserted(insertedPosition)
+    }
+
     class DiffCallback(
         private val oldList: List<Movie>,
         private val newList: List<Movie>

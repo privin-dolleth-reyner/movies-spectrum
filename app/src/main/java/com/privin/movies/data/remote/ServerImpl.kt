@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class ServerImpl @Inject constructor(private val apiClient: ApiClient): Server {
 
-    override suspend fun getNowPlayingMovies(): MovieResponse {
-        return apiClient.getMoviesNowPlaying()
+    override suspend fun getNowPlayingMovies(page: Long): MovieResponse {
+        return apiClient.getMoviesNowPlaying(page)
     }
 }

@@ -38,9 +38,9 @@ data class MovieItem(
     @Json(name = "popularity")
     var popularity: Double,
     @Json(name = "poster_path")
-    var posterPath: String,
+    var posterPath: String?,
     @Json(name = "release_date")
-    var releaseDate: String,
+    var releaseDate: String?,
     @Json(name = "title")
     var title: String,
     @Json(name = "video")

@@ -4,5 +4,5 @@ import com.privin.movies.data.model.MovieResponse
 
 interface Repo {
 
-    suspend fun getMoviesNowPlaying(): MovieResponse
+    suspend fun getMoviesNowPlaying(page: Long): MovieResponse
 }

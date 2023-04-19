@@ -5,7 +5,7 @@ import com.privin.movies.data.remote.Server
 import javax.inject.Inject
 
 class RepoImpl @Inject constructor(private var server: Server): Repo {
-    override suspend fun getMoviesNowPlaying(): MovieResponse {
-        return server.getNowPlayingMovies()
+    override suspend fun getMoviesNowPlaying(page: Long): MovieResponse {
+        return server.getNowPlayingMovies(page)
     }
 }
