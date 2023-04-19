@@ -16,10 +16,12 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var currentFragment: MovieListFragment
 
-    private val nowPlayingFragment: NowPlayingFragment = NowPlayingFragment()
+    private val nowPlayingFragment = NowPlayingFragment()
+    private val popularMoviesFragment = PopularMoviesFragment()
 
     companion object {
         private const val NOW_PLAYING_TAG = "now"
+        private const val POPULAR_MOVIES_TAG = "popular"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,7 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.now_playing -> navigateTo(nowPlayingFragment, NOW_PLAYING_TAG)
+                R.id.popular -> navigateTo(popularMoviesFragment, POPULAR_MOVIES_TAG)
                 else -> {}
             }
 
