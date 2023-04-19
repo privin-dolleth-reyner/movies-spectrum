@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
     private val _nowPlayingMovies: MutableLiveData<List<Movie>> = MutableLiveData()
     val nowPlayingMovies: LiveData<List<Movie>> = _nowPlayingMovies
 
-    var nextPage = 1L
+    var nextPageNowPlaying = 1L
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         Log.e(TAG, "Coroutine exception: ${throwable.message}")
@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
             val movieList = result.first
             _nowPlayingMovies.postValue(movieList)
             if(movieList.isNotEmpty()){
-                nextPage = result.second + 1
+                nextPageNowPlaying = result.second + 1
             }
         }
     }
