@@ -3,6 +3,7 @@ package com.privin.movies.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.privin.movies.R
 
 class NowPlayingFragment : MovieListFragment() {
@@ -15,9 +16,10 @@ class NowPlayingFragment : MovieListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.nowPlayingMovies.observe(requireActivity()) {
-            if(it.isEmpty()){
+            if(viewModel.nextPageNowPlaying>1 && it.isEmpty()){
                 Toast.makeText(requireContext(), getString(R.string.end_of_list), Toast.LENGTH_SHORT).show()
             }
+            binding.loader.isVisible = false
             movieAdapter.addMovieList(it)
         }
     }
