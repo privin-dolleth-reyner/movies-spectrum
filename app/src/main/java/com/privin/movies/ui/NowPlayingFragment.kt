@@ -10,14 +10,19 @@ class NowPlayingFragment : MovieListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        movieAdapter = MovieListAdapter()
         viewModel.loadNowPlaying()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.nowPlayingMovies.observe(requireActivity()) {
-            if(viewModel.nextPageNowPlaying>1 && it.isEmpty()){
-                Toast.makeText(requireContext(), getString(R.string.end_of_list), Toast.LENGTH_SHORT).show()
+            if (viewModel.nextPageNowPlaying > 1 && it.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.end_of_list),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             binding.loader.isVisible = false
             movieAdapter.addMovieList(it)
