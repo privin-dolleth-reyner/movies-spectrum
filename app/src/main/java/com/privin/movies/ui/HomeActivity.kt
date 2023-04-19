@@ -18,10 +18,12 @@ class HomeActivity : AppCompatActivity() {
 
     private val nowPlayingFragment = NowPlayingFragment()
     private val popularMoviesFragment = PopularMoviesFragment()
+    private val upComingMoviesFragment = UpComingMoviesFragment()
 
     companion object {
         private const val NOW_PLAYING_TAG = "now"
         private const val POPULAR_MOVIES_TAG = "popular"
+        private const val UPCOMING_MOVIES_TAG = "upcoming"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.now_playing -> navigateTo(nowPlayingFragment, NOW_PLAYING_TAG)
                 R.id.popular -> navigateTo(popularMoviesFragment, POPULAR_MOVIES_TAG)
+                R.id.upcoming -> navigateTo(upComingMoviesFragment, UPCOMING_MOVIES_TAG)
                 else -> {}
             }
 

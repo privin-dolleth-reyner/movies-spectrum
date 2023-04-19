@@ -6,4 +6,5 @@ interface Repo {
 
     suspend fun getMoviesNowPlaying(page: Long): MovieResponse
     suspend fun getPopularMovies(page: Long): MovieResponse
+    suspend fun getUpcomingMovies(page: Long): MovieResponse
 }
