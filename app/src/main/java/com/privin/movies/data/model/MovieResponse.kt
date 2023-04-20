@@ -56,11 +56,19 @@ data class MovieItem(
     @Json(name = "genre_ids")
     var genreIds: List<Int>
 ){
-    fun toMovie(): Movie{
+    fun toMovie(genre: Map<Int,String>): Movie{
         return Movie(
-            id,
-            title,
-            backdropPath
+            id = id,
+            title = title,
+            backDropPath = backdropPath,
+            genres = getGenres(genre)
         )
+    }
+
+    private fun getGenres(genre: Map<Int,String>): List<String>{
+        if (genreIds.isNullOrEmpty()) return emptyList()
+        return genreIds.map {
+            genre[it] ?: ""
+        }
     }
 }

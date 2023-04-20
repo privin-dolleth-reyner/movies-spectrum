@@ -75,6 +75,7 @@ class MovieListAdapter constructor(
         if (position >= movies.size) return
         val movie = movies[position]
         holder.binding.apply {
+            val genres = movie.genres?.joinToString(",") ?: ""
             title.text = movie.title
         }
         holder.setBackDrop(movie.getBackDropUrl())

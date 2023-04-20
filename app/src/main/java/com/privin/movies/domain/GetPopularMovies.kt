@@ -5,13 +5,15 @@ import com.privin.movies.model.Movie
 import javax.inject.Inject
 
 class GetPopularMovies @Inject constructor(
-    private val repo: Repo
+    private val repo: Repo,
+    private val getAllGenres: dagger.Lazy<GetAllGenres>,
 ) {
 
     suspend fun execute(page: Long = 1): Pair<List<Movie>, Long> {
+        val genres = getAllGenres.get().execute()
         val response = repo.getPopularMovies(page)
         val list = response.results.map {
-            it.toMovie()
+            it.toMovie(genres)
         }
         return Pair(list, response.page)
     }
