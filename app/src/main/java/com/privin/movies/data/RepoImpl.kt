@@ -8,4 +8,12 @@ class RepoImpl @Inject constructor(private var server: Server): Repo {
     override suspend fun getMoviesNowPlaying(page: Long): MovieResponse {
         return server.getNowPlayingMovies(page)
     }
+
+    override suspend fun getPopularMovies(page: Long): MovieResponse {
+        return server.getPopularMovies(page)
+    }
+
+    override suspend fun getUpcomingMovies(page: Long): MovieResponse {
+        return server.getUpcomingMovies(page)
+    }
 }
