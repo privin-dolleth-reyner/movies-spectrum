@@ -1,4 +1,4 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.movie_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privin.movies.databinding.FragmentMovieListBinding
+import com.privin.movies.ui.HomeViewModel
 
 abstract class MovieListFragment : Fragment() {
     protected lateinit var viewModel: HomeViewModel

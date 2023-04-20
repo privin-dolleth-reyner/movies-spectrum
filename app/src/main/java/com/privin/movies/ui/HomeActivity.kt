@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
 import com.privin.movies.databinding.ActivityHomeBinding
+import com.privin.movies.ui.movie_list.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

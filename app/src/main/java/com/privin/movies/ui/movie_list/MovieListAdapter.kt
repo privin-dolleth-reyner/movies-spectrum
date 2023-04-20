@@ -1,4 +1,4 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.movie_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
