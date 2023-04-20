@@ -1,5 +1,6 @@
 package com.privin.movies.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.view.Menu
@@ -86,7 +87,10 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.search -> {} //TODO
+            R.id.search -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
+            }
             R.id.fav -> {} //TODO
             else -> return super.onOptionsItemSelected(item)
         }

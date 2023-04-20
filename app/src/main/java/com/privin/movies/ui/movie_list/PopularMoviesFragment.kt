@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
 import com.privin.movies.model.Movie
+import com.privin.movies.ui.HomeViewModel
 
 class PopularMoviesFragment: MovieListFragment() {
 
+    private lateinit var viewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         viewModel.loadPopularMovies()
     }
 
