@@ -15,7 +15,7 @@ abstract class MovieListFragment : Fragment() {
 
     protected lateinit var binding: FragmentMovieListBinding
 
-    protected lateinit var movieAdapter: MovieListAdapter
+    protected val movieAdapter = MovieListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +34,6 @@ abstract class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
-    }
-
-    fun scrollToTop() {
-        binding.listView.scrollToPosition(0)
     }
 
     private fun setRecyclerView() {

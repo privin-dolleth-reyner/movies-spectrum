@@ -3,7 +3,6 @@ package com.privin.movies.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.privin.movies.R
 import com.privin.movies.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,59 +13,17 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    private lateinit var currentFragment: MovieListFragment
-
-    private val nowPlayingFragment = NowPlayingFragment()
-    private val popularMoviesFragment = PopularMoviesFragment()
-    private val upComingMoviesFragment = UpComingMoviesFragment()
-
-    companion object {
-        private const val NOW_PLAYING_TAG = "now"
-        private const val POPULAR_MOVIES_TAG = "popular"
-        private const val UPCOMING_MOVIES_TAG = "upcoming"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         setContentView(binding.root)
-        setCurrentFragment(nowPlayingFragment, NOW_PLAYING_TAG)
-        setListeners()
+        setNowPlaying()
     }
 
-    private fun setListeners() {
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.now_playing -> navigateTo(nowPlayingFragment, NOW_PLAYING_TAG)
-                R.id.popular -> navigateTo(popularMoviesFragment, POPULAR_MOVIES_TAG)
-                R.id.upcoming -> navigateTo(upComingMoviesFragment, UPCOMING_MOVIES_TAG)
-                else -> {}
-            }
-
-            return@setOnItemSelectedListener true
-        }
-        binding.bottomNavigationView.setOnItemReselectedListener {
-            currentFragment.scrollToTop()
-        }
-    }
-
-    private fun navigateTo(fragment: MovieListFragment, tag: String) {
-        if (currentFragment == fragment) return
+    private fun setNowPlaying() {
         val ft = supportFragmentManager.beginTransaction()
-        if (supportFragmentManager.findFragmentByTag(tag) == null) {
-            ft.add(binding.container.id, fragment, tag)
-        }
-        ft.show(fragment)
-        ft.hide(currentFragment)
-        currentFragment = fragment
-        ft.commit()
-    }
-
-    private fun setCurrentFragment(fragment: MovieListFragment, tag: String) {
-        currentFragment = nowPlayingFragment
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(binding.container.id, fragment, tag)
+        ft.add(binding.container.id, NowPlayingFragment())
         ft.commit()
     }
 }

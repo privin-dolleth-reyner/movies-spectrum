@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class MovieResponse(
     @Json(name = "dates")
-    var dates : Dates?,
+    var dates : Dates,
     @Json(name = "page")
     var page : Long,
     @Json(name = "results")
