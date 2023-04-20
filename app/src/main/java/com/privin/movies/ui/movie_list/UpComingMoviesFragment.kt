@@ -5,12 +5,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.privin.movies.R
+import com.privin.movies.model.Movie
 
 class UpComingMoviesFragment: MovieListFragment() {
+    override val onClickMovieItem: (movie: Movie) -> Unit
+        get() = {
+
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieAdapter = MovieListAdapter()
+        movieAdapter = MovieListAdapter(onItemClickListener = onClickMovieItem)
         viewModel.loadUpcomingMovies()
     }
 

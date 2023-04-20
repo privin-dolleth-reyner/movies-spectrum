@@ -4,6 +4,7 @@ import android.util.Log
 import com.privin.movies.data.local.GenreDao
 import com.privin.movies.data.local.GenreEntity
 import com.privin.movies.data.model.Genre
+import com.privin.movies.data.model.MovieDetailResponse
 import com.privin.movies.data.model.MovieResponse
 import com.privin.movies.data.remote.Server
 import kotlinx.coroutines.coroutineScope
@@ -45,6 +46,10 @@ class RepoImpl @Inject constructor(
         return server.getGenres().genres.also { list ->
             updateGenreDb(list)
         }
+    }
+
+    override suspend fun getMovieDetail(id: Long): MovieDetailResponse {
+        return server.getMovieDetail(id)
     }
 
     private suspend fun updateGenreDb(list: List<Genre>) {

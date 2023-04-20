@@ -1,8 +1,10 @@
 package com.privin.movies.data.remote
 
 import com.privin.movies.data.model.GenreResponse
+import com.privin.movies.data.model.MovieDetailResponse
 import com.privin.movies.data.model.MovieResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -18,5 +20,7 @@ interface ApiClient {
     suspend fun getTopRatedMovies(@Query("page") page: Long): MovieResponse
     @GET("genre/movie/list")
     suspend fun getGenre(): GenreResponse
+    @GET("movie/{id}")
+    suspend fun getMovieDetail(@Path("id") id: Long): MovieDetailResponse
 
 }

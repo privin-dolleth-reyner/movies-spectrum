@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privin.movies.databinding.FragmentMovieListBinding
+import com.privin.movies.model.Movie
 import com.privin.movies.ui.HomeViewModel
 
 abstract class MovieListFragment : Fragment() {
@@ -18,6 +19,7 @@ abstract class MovieListFragment : Fragment() {
 
     protected lateinit var movieAdapter: MovieListAdapter
 
+    protected abstract val onClickMovieItem : ((movie: Movie) -> Unit)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]

@@ -8,8 +8,9 @@ import com.bumptech.glide.Glide
 import com.privin.movies.databinding.ItemMovieBinding
 import com.privin.movies.model.Movie
 
-class MovieListAdapter constructor(
-    private val movies: ArrayList<Movie> = ArrayList()
+class MovieListAdapter(
+    private val movies: ArrayList<Movie> = ArrayList(),
+    private val onItemClickListener: (movie: Movie) -> Unit,
 ) : RecyclerView.Adapter<MovieListAdapter.MovieView>() {
 
 
@@ -79,5 +80,8 @@ class MovieListAdapter constructor(
             title.text = movie.title
         }
         holder.setBackDrop(movie.getBackDropUrl())
+        holder.binding.root.setOnClickListener {
+            onItemClickListener(movie)
+        }
     }
 }
