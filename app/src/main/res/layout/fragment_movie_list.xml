@@ -8,8 +8,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"
+        android:background="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
