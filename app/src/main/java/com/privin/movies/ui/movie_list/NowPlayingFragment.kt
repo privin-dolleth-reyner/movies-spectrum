@@ -10,18 +10,8 @@ import com.privin.movies.ui.HomeActivity
 import com.privin.movies.ui.movie_detail.MovieDetailFragment
 
 class NowPlayingFragment : MovieListFragment() {
-    override val onClickMovieItem: (movie: Movie) -> Unit
-        get() = {
-            val fragment = MovieDetailFragment()
-            fragment.arguments = Bundle().apply {
-                putLong("id", it.id)
-            }
-            fragment.show(childFragmentManager, "detail")
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieAdapter = MovieListAdapter(onItemClickListener = onClickMovieItem)
         viewModel.loadNowPlaying()
     }
 

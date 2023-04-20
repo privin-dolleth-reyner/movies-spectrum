@@ -8,14 +8,9 @@ import com.privin.movies.R
 import com.privin.movies.model.Movie
 
 class TopRatedMoviesFragment: MovieListFragment() {
-    override val onClickMovieItem: (movie: Movie) -> Unit
-        get() = {
-
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieAdapter = MovieListAdapter(onItemClickListener = onClickMovieItem)
         viewModel.loadTopRatedMovies()
     }
 

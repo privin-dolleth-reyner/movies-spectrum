@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.privin.movies.databinding.FragmentMovieListBinding
 import com.privin.movies.model.Movie
 import com.privin.movies.ui.HomeViewModel
+import com.privin.movies.ui.movie_detail.MovieDetailFragment
 
 abstract class MovieListFragment : Fragment() {
     protected lateinit var viewModel: HomeViewModel
@@ -19,10 +20,17 @@ abstract class MovieListFragment : Fragment() {
 
     protected lateinit var movieAdapter: MovieListAdapter
 
-    protected abstract val onClickMovieItem : ((movie: Movie) -> Unit)
+    protected val onClickMovieItem : ((movie: Movie) -> Unit) = {
+        val fragment = MovieDetailFragment()
+        fragment.arguments = Bundle().apply {
+            putLong("id", it.id)
+        }
+        fragment.show(childFragmentManager, "detail")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        movieAdapter = MovieListAdapter(onItemClickListener = onClickMovieItem)
     }
 
     override fun onCreateView(

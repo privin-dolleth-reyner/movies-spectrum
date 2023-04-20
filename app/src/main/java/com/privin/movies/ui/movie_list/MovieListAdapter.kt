@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.privin.movies.R
 import com.privin.movies.databinding.ItemMovieBinding
 import com.privin.movies.model.Movie
 
@@ -58,6 +59,7 @@ class MovieListAdapter(
                 binding.apply {
                     Glide.with(root.context)
                         .load(url)
+                        .placeholder(R.drawable.ic_launcher_foreground)
                         .into(backdrop)
                 }
             }
