@@ -4,4 +4,6 @@ import com.privin.movies.data.model.MovieResponse
 
 interface Server {
     suspend fun getNowPlayingMovies(page: Long): MovieResponse
+    suspend fun getPopularMovies(page: Long): MovieResponse
+    suspend fun getUpcomingMovies(page: Long): MovieResponse
 }

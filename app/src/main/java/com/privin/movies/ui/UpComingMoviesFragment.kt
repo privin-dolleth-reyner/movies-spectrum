@@ -6,18 +6,18 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.privin.movies.R
 
-class NowPlayingFragment : MovieListFragment() {
+class UpComingMoviesFragment: MovieListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movieAdapter = MovieListAdapter()
-        viewModel.loadNowPlaying()
+        viewModel.loadUpcomingMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.nowPlayingMovies.observe(requireActivity()) {
-            if (viewModel.nextPageNowPlaying > 1 && it.isEmpty()) {
+        viewModel.upcomingMovies.observe(requireActivity()) {
+            if (viewModel.nextPagePopularMovies > 1 && it.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.end_of_list),
@@ -30,7 +30,7 @@ class NowPlayingFragment : MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadNowPlaying(viewModel.nextPageNowPlaying)
+        viewModel.loadUpcomingMovies(viewModel.nextPageUpcomingMovies)
     }
 
 }
