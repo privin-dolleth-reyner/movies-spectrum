@@ -4,12 +4,12 @@ import com.privin.movies.data.Repo
 import com.privin.movies.model.Movie
 import javax.inject.Inject
 
-class GetUpComingMovies @Inject constructor(
+class GetTopRatedMovies @Inject constructor(
     private val repo: Repo
 ) {
 
     suspend fun execute(page: Long = 1): Pair<List<Movie>, Long> {
-        val response = repo.getUpcomingMovies(page)
+        val response = repo.getTopRatedMovies(page)
         val list = response.results.map {
             it.toMovie()
         }

@@ -1,6 +1,7 @@
 package com.privin.movies.ui
 
 import android.os.Bundle
+import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
@@ -19,11 +20,13 @@ class HomeActivity : AppCompatActivity() {
     private val nowPlayingFragment = NowPlayingFragment()
     private val popularMoviesFragment = PopularMoviesFragment()
     private val upComingMoviesFragment = UpComingMoviesFragment()
+    private val topRatedMoviesFragment = TopRatedMoviesFragment()
 
     companion object {
         private const val NOW_PLAYING_TAG = "now"
         private const val POPULAR_MOVIES_TAG = "popular"
         private const val UPCOMING_MOVIES_TAG = "upcoming"
+        private const val TOP_RATED_MOVIES_TAG = "top_rated"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +36,8 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         setCurrentFragment(nowPlayingFragment, NOW_PLAYING_TAG)
         setListeners()
+        val titleText = getString(R.string.app_name)
+        title = Html.fromHtml("<font color='#000000'> $titleText </font>", 0)
     }
 
     private fun setListeners() {
@@ -41,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.now_playing -> navigateTo(nowPlayingFragment, NOW_PLAYING_TAG)
                 R.id.popular -> navigateTo(popularMoviesFragment, POPULAR_MOVIES_TAG)
                 R.id.upcoming -> navigateTo(upComingMoviesFragment, UPCOMING_MOVIES_TAG)
+                R.id.top_rated -> navigateTo(topRatedMoviesFragment, TOP_RATED_MOVIES_TAG)
                 else -> {}
             }
 
