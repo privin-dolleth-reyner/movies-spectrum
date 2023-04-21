@@ -12,6 +12,7 @@ import com.privin.movies.domain.GetMoviesPlayingNow
 import com.privin.movies.domain.GetPopularMovies
 import com.privin.movies.domain.GetTopRatedMovies
 import com.privin.movies.domain.GetUpComingMovies
+import com.privin.movies.isInternetConnected
 import com.privin.movies.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -61,7 +62,12 @@ class HomeViewModel @Inject constructor(
             when(throwable){
                 is ApiError.UnAuthorized -> _error.emit(context.get().getString(R.string.err_401))
                 is ApiError.PageNotFound -> _error.emit(context.get().getString(R.string.err_404))
-                else -> _error.emit(context.get().getString(R.string.err))
+                else -> {
+                    if (context.get().isInternetConnected().not())
+                        _error.emit(context.get().getString(R.string.err_no_internet))
+                    else
+                        _error.emit(context.get().getString(R.string.err))
+                }
             }
         }
     }

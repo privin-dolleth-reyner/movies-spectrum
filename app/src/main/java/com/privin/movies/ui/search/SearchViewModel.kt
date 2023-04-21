@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.privin.movies.ApiError
 import com.privin.movies.R
 import com.privin.movies.domain.SearchMovies
+import com.privin.movies.isInternetConnected
 import com.privin.movies.model.Movie
 import com.privin.movies.ui.HomeViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +45,12 @@ class SearchViewModel @Inject constructor(
             when(throwable){
                 is ApiError.UnAuthorized -> _error.emit(context.get().getString(R.string.err_401))
                 is ApiError.PageNotFound -> _error.emit(context.get().getString(R.string.err_404))
-                else -> _error.emit(context.get().getString(R.string.err))
+                else -> {
+                    if (context.get().isInternetConnected().not())
+                        _error.emit(context.get().getString(R.string.err_no_internet))
+                    else
+                        _error.emit(context.get().getString(R.string.err))
+                }
             }
         }
     }
