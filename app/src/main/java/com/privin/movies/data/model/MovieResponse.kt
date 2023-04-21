@@ -61,7 +61,11 @@ data class MovieItem(
             id = id,
             title = title,
             backDropPath = backdropPath,
-            genres = getGenres(genre)
+            posterPath = posterPath,
+            genres = getGenres(genre),
+            voteAverage = voteAverage,
+            voteCount = voteCount,
+            releaseDate = releaseDate
         )
     }
 
