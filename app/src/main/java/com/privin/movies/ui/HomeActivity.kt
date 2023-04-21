@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
 import com.privin.movies.databinding.ActivityHomeBinding
+import com.privin.movies.ui.favourite.FavouriteActivity
 import com.privin.movies.ui.movie_list.*
 import com.privin.movies.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
         setCurrentFragment(nowPlayingFragment, NOW_PLAYING_TAG)
         setListeners()
         val titleText = getString(R.string.app_name)
-        title = Html.fromHtml("<font color='#000000'> $titleText </font>", 0)
+        title = titleText
     }
 
     private fun setListeners() {
@@ -92,7 +93,10 @@ class HomeActivity : AppCompatActivity() {
                 val intent = Intent(this, SearchActivity::class.java)
                 startActivity(intent)
             }
-            R.id.fav -> {} //TODO
+            R.id.fav -> {
+                val intent = Intent(this, FavouriteActivity::class.java)
+                startActivity(intent)
+            }
             else -> return super.onOptionsItemSelected(item)
         }
         return true
