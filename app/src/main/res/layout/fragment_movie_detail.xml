@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/black"
-            android:paddingVertical="8dp"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_launcher_foreground"
-            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintHeight_min="300dp"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -45,18 +45,93 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
+
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             android:paddingVertical="4dp"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             app:layout_constraintEnd_toEndOf="@id/end_guide"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@id/start_guide"
+            app:layout_constraintEnd_toStartOf="@id/toggleFav"
             app:layout_constraintTop_toBottomOf="@id/poster"
-            tools:text="Title" />
+            tools:text="Title"/>
+
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/toggleFav"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            style="@style/toggleButton"
+            android:layout_margin="8dp"
+            android:background="@drawable/ic_toggle_bg"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="@id/end_guide"/>
+
+        <TextView
+            android:id="@+id/vote_avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="2dp"
+            android:gravity="start"
+            android:maxLines="1"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+            android:textColor="@color/black"
+            app:drawableStartCompat="@drawable/ic_star_rate"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintStart_toStartOf="@id/start_guide"
+            tools:text="7"
+            app:drawableTint="@color/red" />
+
+        <TextView
+            android:id="@+id/vote_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLines="1"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="@id/end_guide"
+            tools:text="8.9K votes" />
+
+
+        <TextView
+            android:id="@+id/tagline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:paddingVertical="4dp"
+            android:textStyle="italic"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintEnd_toEndOf="@id/end_guide"
+            app:layout_constraintStart_toStartOf="@id/start_guide"
+            app:layout_constraintTop_toBottomOf="@id/vote_avg"
+            tools:text="Tagline" />
+
+        <TextView
+            android:id="@+id/overview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:gravity="start"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            app:layout_constraintEnd_toEndOf="@id/end_guide"
+            app:layout_constraintStart_toStartOf="@id/start_guide"
+            app:layout_constraintTop_toBottomOf="@id/tagline"
+            tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground 'fight clubs' forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
+
 
         <TextView
             android:id="@+id/genres"
@@ -68,7 +143,7 @@
             android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
             app:layout_constraintEnd_toEndOf="@id/end_guide"
             app:layout_constraintStart_toStartOf="@id/start_guide"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/overview"
             tools:text="Genres" />
 
 
@@ -84,9 +159,23 @@
             app:layout_constraintTop_toBottomOf="@id/genres"
             tools:text="Release Date" />
 
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            app:layout_constraintStart_toStartOf="@id/start_guide"
+            app:layout_constraintTop_toBottomOf="@id/release"
+            tools:text="Status" />
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addToFav"
-            style="@style/Widget.Material3.Button.IconButton.Filled"
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
@@ -99,38 +188,21 @@
             app:icon="@drawable/ic_fav"
             app:iconGravity="textStart"
             app:iconPadding="16dp"
+            android:visibility="gone"
             app:iconTint="@color/white"
             app:layout_constraintEnd_toEndOf="@id/end_guide"
             app:layout_constraintStart_toStartOf="@id/start_guide"
-            app:layout_constraintTop_toBottomOf="@id/release"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            app:rippleColor="@color/white"
             tools:text="@string/add_to_favourites" />
 
-        <TextView
-            android:id="@+id/tagline"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:paddingVertical="4dp"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-            app:layout_constraintEnd_toEndOf="@id/end_guide"
-            app:layout_constraintStart_toStartOf="@id/start_guide"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@id/addToFav"
-            tools:text="Tagline" />
-
-        <TextView
-            android:id="@+id/overview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:layout_marginBottom="400dp"
-            android:gravity="start"
-            android:minHeight="100dp"
-            android:paddingVertical="4dp"
-            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-            app:layout_constraintEnd_toEndOf="@id/end_guide"
-            app:layout_constraintStart_toStartOf="@id/start_guide"
-            app:layout_constraintTop_toBottomOf="@id/tagline"
-            tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground 'fight clubs' forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_min="200dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

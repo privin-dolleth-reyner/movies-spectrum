@@ -8,7 +8,7 @@ object Util {
 
     fun displayTextVotes(voteCount: Long) =
         if (voteCount < 1000)
-            voteCount.toString()
+            "$voteCount votes"
         else "${String.format("%.1f", floor(voteCount.toDouble()) / 1000)}K votes"
 
 
