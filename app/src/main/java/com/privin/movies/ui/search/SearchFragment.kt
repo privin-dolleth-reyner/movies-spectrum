@@ -9,6 +9,10 @@ import com.privin.movies.ui.movie_list.MovieListFragment
 
 class SearchFragment : MovieListFragment() {
 
+    companion object{
+        const val TAG = "SearchFragment"
+    }
+
     lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,22 +24,32 @@ class SearchFragment : MovieListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loader.isVisible = false
-        binding.searchInput.apply {
-            isVisible = true
-            requestFocus()
-            doOnTextChanged { text, start, before, count ->
-                viewModel.searchQuery = text.toString()
-                viewModel.page = 1L
-
-                viewModel.searchMovies(viewModel.searchQuery, viewModel.page)
-            }
-        }
+        observeData()
+        initSearchInput()
+        initBack()
+    }
+    private fun initBack(){
         binding.back.apply {
             isVisible = true
             setOnClickListener {
                 activity?.finish()
             }
         }
+    }
+
+    private fun initSearchInput(){
+        binding.searchInput.apply {
+            isVisible = true
+            requestFocus()
+            doOnTextChanged { text, _, _, _ ->
+                viewModel.searchQuery = text.toString()
+                viewModel.page = 1L
+
+                viewModel.searchMovies(viewModel.searchQuery, viewModel.page)
+            }
+        }
+    }
+    private fun observeData(){
         viewModel.searchResultMovies.observe(requireActivity()) {
             if (viewModel.page > 1) {
                 movieAdapter.addMovieList(it)

@@ -18,9 +18,13 @@ class SearchActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initSearchFragment()
+    }
+
+    private fun initSearchFragment(){
         supportActionBar?.hide()
         val ft = supportFragmentManager.beginTransaction()
-        ft.replace(binding.container.id, SearchFragment(), "search")
+        ft.replace(binding.container.id, SearchFragment(), SearchFragment.TAG)
         ft.commit()
     }
 }

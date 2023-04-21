@@ -17,7 +17,7 @@ abstract class MovieListFragment : Fragment() {
 
     protected lateinit var movieAdapter: MovieListAdapter
 
-    protected val onClickMovieItem : ((movie: Movie) -> Unit) = {
+    private val onClickMovieItem : ((movie: Movie) -> Unit) = {
         val fragment = MovieDetailFragment()
         fragment.arguments = Bundle().apply {
             putLong("id", it.id)
