@@ -11,4 +11,5 @@ interface Server {
     suspend fun getTopRatedMovies(page: Long): MovieResponse
     suspend fun getGenres(): GenreResponse
     suspend fun getMovieDetail(id: Long): MovieDetailResponse
+    suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse
 }

@@ -22,5 +22,7 @@ interface ApiClient {
     suspend fun getGenre(): GenreResponse
     @GET("movie/{id}")
     suspend fun getMovieDetail(@Path("id") id: Long): MovieDetailResponse
+    @GET("search/movie")
+    suspend fun searchMovies(@Query("query") searchQuery: String, @Query("page") page: Long): MovieResponse
 
 }

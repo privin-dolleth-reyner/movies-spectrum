@@ -1,18 +1,21 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.search
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.privin.movies.R
+import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.databinding.ActivitySearchBinding
-import com.privin.movies.ui.movie_list.SearchFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchActivity: AppCompatActivity() {
+@AndroidEntryPoint
+class SearchActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySearchBinding
 
+    lateinit var viewModel: SearchViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()

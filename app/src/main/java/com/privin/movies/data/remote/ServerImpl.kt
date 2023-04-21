@@ -30,4 +30,8 @@ class ServerImpl @Inject constructor(private val apiClient: ApiClient): Server {
     override suspend fun getMovieDetail(id: Long): MovieDetailResponse {
         return apiClient.getMovieDetail(id)
     }
+
+    override suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse {
+        return apiClient.searchMovies(searchQuery, page)
+    }
 }

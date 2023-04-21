@@ -12,4 +12,5 @@ interface Repo {
     suspend fun getTopRatedMovies(page: Long): MovieResponse
     suspend fun getGenre(): List<Genre>
     suspend fun getMovieDetail(id: Long): MovieDetailResponse
+    suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse
 }

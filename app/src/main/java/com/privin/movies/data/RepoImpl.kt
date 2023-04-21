@@ -52,6 +52,10 @@ class RepoImpl @Inject constructor(
         return server.getMovieDetail(id)
     }
 
+    override suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse {
+        return server.searchMovies(searchQuery, page)
+    }
+
     private suspend fun updateGenreDb(list: List<Genre>) {
         coroutineScope {
             launch {
