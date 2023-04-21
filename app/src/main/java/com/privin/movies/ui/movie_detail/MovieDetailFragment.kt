@@ -84,6 +84,7 @@ class MovieDetailFragment : BottomSheetDialogFragment() {
             voteCount.text = Util.displayTextVotes(movie.voteCount)
             voteAvg.text = String.format("%.1f / 10", movie.voteAverage)
             status.text = getString(R.string.status, movie.status)
+            languages.text = getString(R.string.languages, movie.spokenLanguages)
             viewModel.isFavMovie(movie.id)
             toggleFav.setOnCheckedChangeListener { _, fav ->
                 if (fav){

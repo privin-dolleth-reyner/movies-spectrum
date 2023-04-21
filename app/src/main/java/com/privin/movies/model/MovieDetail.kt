@@ -16,6 +16,7 @@ data class MovieDetail(
     val status: String,
     val voteAverage: Double,
     val voteCount: Long,
+    val spokenLanguages: String?
 ){
 
     fun getBackDropUrl(): String? {

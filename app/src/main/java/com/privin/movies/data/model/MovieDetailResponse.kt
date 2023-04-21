@@ -30,6 +30,9 @@ data class MovieDetailResponse(
     val voteAverage: Double,
     @Json(name = "vote_count")
     val voteCount: Long,
+    @Json(name = "spoken_languages")
+    val spokenLanguages: List<SpokenLanguage>?,
+
 ){
     fun toMovieDetail(): MovieDetail{
         return MovieDetail(
@@ -44,8 +47,18 @@ data class MovieDetailResponse(
             tagline = tagline,
             status = status,
             voteAverage = voteAverage,
-            voteCount = voteCount
+            voteCount = voteCount,
+            spokenLanguages = spokenLanguages?.joinToString (", ", transform = { it.englishName } )
         )
     }
 }
 
+@JsonClass(generateAdapter = true)
+data class SpokenLanguage(
+    @Json(name = "english_name")
+    val englishName: String,
+    @Json(name = "iso_639_1")
+    val iso6391: String?,
+    @Json(name = "name")
+    val name: String?,
+)
