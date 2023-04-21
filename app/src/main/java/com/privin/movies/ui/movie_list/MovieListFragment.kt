@@ -1,25 +1,32 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.movie_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privin.movies.databinding.FragmentMovieListBinding
+import com.privin.movies.model.Movie
+import com.privin.movies.ui.movie_detail.MovieDetailFragment
 
 abstract class MovieListFragment : Fragment() {
-    protected lateinit var viewModel: HomeViewModel
 
     protected lateinit var binding: FragmentMovieListBinding
 
     protected lateinit var movieAdapter: MovieListAdapter
 
+    private val onClickMovieItem : ((movie: Movie) -> Unit) = {
+        val fragment = MovieDetailFragment()
+        fragment.arguments = Bundle().apply {
+            putLong("id", it.id)
+        }
+        fragment.show(childFragmentManager, "detail")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        movieAdapter = MovieListAdapter(onItemClickListener = onClickMovieItem)
     }
 
     override fun onCreateView(

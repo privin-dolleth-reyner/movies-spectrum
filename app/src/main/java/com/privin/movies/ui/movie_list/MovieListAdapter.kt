@@ -1,15 +1,17 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.movie_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.privin.movies.R
 import com.privin.movies.databinding.ItemMovieBinding
 import com.privin.movies.model.Movie
 
-class MovieListAdapter constructor(
-    private val movies: ArrayList<Movie> = ArrayList()
+class MovieListAdapter(
+    private val movies: ArrayList<Movie> = ArrayList(),
+    private val onItemClickListener: (movie: Movie) -> Unit,
 ) : RecyclerView.Adapter<MovieListAdapter.MovieView>() {
 
 
@@ -57,6 +59,7 @@ class MovieListAdapter constructor(
                 binding.apply {
                     Glide.with(root.context)
                         .load(url)
+                        .placeholder(R.drawable.ic_launcher_foreground)
                         .into(backdrop)
                 }
             }
@@ -75,8 +78,12 @@ class MovieListAdapter constructor(
         if (position >= movies.size) return
         val movie = movies[position]
         holder.binding.apply {
+            val genres = movie.genres?.joinToString(",") ?: ""
             title.text = movie.title
         }
         holder.setBackDrop(movie.getBackDropUrl())
+        holder.binding.root.setOnClickListener {
+            onItemClickListener(movie)
+        }
     }
 }

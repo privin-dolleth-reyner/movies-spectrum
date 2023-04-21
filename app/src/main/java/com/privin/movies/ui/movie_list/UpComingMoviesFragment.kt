@@ -1,22 +1,26 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.movie_list
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
+import com.privin.movies.model.Movie
+import com.privin.movies.ui.HomeViewModel
 
-class TopRatedMoviesFragment: MovieListFragment() {
+class UpComingMoviesFragment: MovieListFragment() {
 
+    private lateinit var viewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieAdapter = MovieListAdapter()
-        viewModel.loadTopRatedMovies()
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel.loadUpcomingMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.topRatedMovies.observe(requireActivity()) {
+        viewModel.upcomingMovies.observe(requireActivity()) {
             if (viewModel.nextPagePopularMovies > 1 && it.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -30,7 +34,7 @@ class TopRatedMoviesFragment: MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadTopRatedMovies(viewModel.nextPageUpcomingMovies)
+        viewModel.loadUpcomingMovies(viewModel.nextPageUpcomingMovies)
     }
 
 }

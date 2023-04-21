@@ -1,7 +1,10 @@
 package com.privin.movies
 
+import android.content.Context
 import com.privin.movies.data.Repo
 import com.privin.movies.data.RepoImpl
+import com.privin.movies.data.local.Database
+import com.privin.movies.data.local.GenreDao
 import com.privin.movies.data.remote.ApiClient
 import com.privin.movies.data.remote.Server
 import com.privin.movies.data.remote.ServerImpl
@@ -11,6 +14,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -71,6 +75,17 @@ abstract class AppModule {
         @Singleton
         fun provideApiClient(retrofit: Retrofit): ApiClient{
             return retrofit.create(ApiClient::class.java)
+        }
+        @Provides
+        @Singleton
+        fun providesDatabase(@ApplicationContext context: Context): Database{
+            return Database.createDb(context)
+        }
+
+        @Provides
+        @Singleton
+        fun providesGenreDao(database: Database): GenreDao{
+            return database.createGenre()
         }
     }
 

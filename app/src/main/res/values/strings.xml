@@ -1,8 +1,13 @@
 <resources>
-    <string name="app_name">Movies</string>
+    <string name="app_name">Spectrum</string>
     <string name="end_of_list">End of List</string>
     <string name="now_playing">Now Playing</string>
     <string name="popular">Popular</string>
     <string name="upcoming">Upcoming</string>
     <string name="top_rated">Top Rated</string>
+    <string name="search">Search</string>
+    <string name="favourites">Favourites</string>
+    <string name="add_to_favourites">Add To Favourites</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="search_movies">Search Movies...</string>
 </resources>

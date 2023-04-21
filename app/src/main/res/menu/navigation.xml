@@ -5,7 +5,6 @@
     <item
         android:id="@+id/now_playing"
         android:icon="@drawable/ic_now_playing"
-        android:titleCondensed="Now"
         android:title="@string/now_playing" />
 
     <item

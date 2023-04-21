@@ -1,23 +1,29 @@
-package com.privin.movies.ui
+package com.privin.movies.ui.movie_list
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
+import com.privin.movies.model.Movie
+import com.privin.movies.ui.HomeActivity
+import com.privin.movies.ui.HomeViewModel
+import com.privin.movies.ui.movie_detail.MovieDetailFragment
 
-class PopularMoviesFragment: MovieListFragment() {
+class NowPlayingFragment : MovieListFragment() {
 
+    private lateinit var viewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieAdapter = MovieListAdapter()
-        viewModel.loadPopularMovies()
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel.loadNowPlaying()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.popularMovies.observe(requireActivity()) {
-            if (viewModel.nextPagePopularMovies > 1 && it.isEmpty()) {
+        viewModel.nowPlayingMovies.observe(requireActivity()) {
+            if (viewModel.nextPageNowPlaying > 1 && it.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.end_of_list),
@@ -30,7 +36,7 @@ class PopularMoviesFragment: MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadPopularMovies(viewModel.nextPagePopularMovies)
+        viewModel.loadNowPlaying(viewModel.nextPageNowPlaying)
     }
 
 }

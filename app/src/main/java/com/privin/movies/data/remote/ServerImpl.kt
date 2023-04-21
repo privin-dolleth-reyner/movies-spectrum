@@ -1,5 +1,7 @@
 package com.privin.movies.data.remote
 
+import com.privin.movies.data.model.GenreResponse
+import com.privin.movies.data.model.MovieDetailResponse
 import com.privin.movies.data.model.MovieResponse
 import javax.inject.Inject
 
@@ -19,5 +21,17 @@ class ServerImpl @Inject constructor(private val apiClient: ApiClient): Server {
 
     override suspend fun getTopRatedMovies(page: Long): MovieResponse {
         return apiClient.getTopRatedMovies(page)
+    }
+
+    override suspend fun getGenres(): GenreResponse {
+        return apiClient.getGenre()
+    }
+
+    override suspend fun getMovieDetail(id: Long): MovieDetailResponse {
+        return apiClient.getMovieDetail(id)
+    }
+
+    override suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse {
+        return apiClient.searchMovies(searchQuery, page)
     }
 }

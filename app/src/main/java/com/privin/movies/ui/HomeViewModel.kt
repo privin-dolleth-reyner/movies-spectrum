@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
     var nextPageUpcomingMovies = 1L
     var nextPageTopRatedMovies = 1L
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(TAG, "Coroutine exception: ${throwable.message}")
     }
     fun loadNowPlaying(page: Long = 1){

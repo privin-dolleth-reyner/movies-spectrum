@@ -1,11 +1,16 @@
 package com.privin.movies.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
 import com.privin.movies.databinding.ActivityHomeBinding
+import com.privin.movies.ui.movie_list.*
+import com.privin.movies.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,5 +79,22 @@ class HomeActivity : AppCompatActivity() {
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(binding.container.id, fragment, tag)
         ft.commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.search -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.fav -> {} //TODO
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
     }
 }
