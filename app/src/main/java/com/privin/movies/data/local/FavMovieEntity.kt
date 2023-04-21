@@ -13,5 +13,6 @@ data class FavMovieEntity(
     var genres: String?,
     var voteAverage: Double,
     var voteCount: Long,
-    var releaseDate: String?
+    var releaseDate: String?,
+    var updatedTime: Long = System.currentTimeMillis()
 )

@@ -9,7 +9,7 @@ interface FavMovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(favMovieEntity: FavMovieEntity)
 
-    @Query("select * from FavMovieEntity")
+    @Query("select * from FavMovieEntity order by updatedTime DESC")
     fun getAllFavMovies(): Flow<List<FavMovieEntity>>
     @Query("delete from FavMovieEntity where id=:id")
     fun removeFromFav(id: Long)
