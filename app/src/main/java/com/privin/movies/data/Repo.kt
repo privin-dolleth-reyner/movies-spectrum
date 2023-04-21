@@ -1,8 +1,10 @@
 package com.privin.movies.data
 
+import com.privin.movies.data.local.FavMovieEntity
 import com.privin.movies.data.model.Genre
 import com.privin.movies.data.model.MovieDetailResponse
 import com.privin.movies.data.model.MovieResponse
+import kotlinx.coroutines.flow.Flow
 
 interface Repo {
 
@@ -13,4 +15,8 @@ interface Repo {
     suspend fun getGenre(): List<Genre>
     suspend fun getMovieDetail(id: Long): MovieDetailResponse
     suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse
+    suspend fun getFavMovies(): Flow<List<FavMovieEntity>>
+    suspend fun addToFav(favMovieEntity: FavMovieEntity)
+    suspend fun removeFromFav(id: Long)
+    suspend fun isFavMovie(id: Long): Boolean
 }

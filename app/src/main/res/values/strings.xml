@@ -10,4 +10,9 @@
     <string name="add_to_favourites">Add To Favourites</string>
     <string name="movie_details">Movie Details</string>
     <string name="search_movies">Search Movies...</string>
+    <string name="release">Release : %s</string>
+    <string name="languages">Languages : %s</string>
+    <string name="status">Release Status : %s</string>
+    <string name="genre">Genres : %s</string>
+    <string name="no_movies_to_show">No movies to show!</string>
 </resources>

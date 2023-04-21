@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    app:cardCornerRadius="8dp"
-    android:layout_margin="8dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,20 +15,83 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/backdrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="250dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"/>
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/vote_avg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:drawablePadding="2dp"
+            android:gravity="start"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:textColor="@color/black"
+            app:drawableStartCompat="@drawable/ic_star_rate"
+            app:layout_constraintTop_toBottomOf="@id/backdrop"
+            tools:text="7"
+            app:drawableTint="@color/red" />
+
+        <TextView
+            android:id="@+id/vote_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="end"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/backdrop"
+            tools:text="8.9K votes" />
+
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="start"
+            android:maxLines="1"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/vote_count"
+            tools:text="7" />
+
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="start"
+            android:maxLines="2"
+            android:paddingVertical="8dp"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            android:textStyle="italic"
+            app:layout_constraintTop_toBottomOf="@id/release_date"
+            tools:text="Horror" />
+
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Now Playing"
-            android:alpha="0.6"
-            android:background="@color/black"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="@color/white" />
+            android:layout_marginStart="8dp"
+            android:gravity="start"
+            android:maxLines="2"
+            android:paddingVertical="8dp"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/genres"
+            tools:text="Now Playing" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -4,6 +4,7 @@ import android.content.Context
 import com.privin.movies.data.Repo
 import com.privin.movies.data.RepoImpl
 import com.privin.movies.data.local.Database
+import com.privin.movies.data.local.FavMovieDao
 import com.privin.movies.data.local.GenreDao
 import com.privin.movies.data.remote.ApiClient
 import com.privin.movies.data.remote.Server
@@ -86,6 +87,12 @@ abstract class AppModule {
         @Singleton
         fun providesGenreDao(database: Database): GenreDao{
             return database.createGenre()
+        }
+
+        @Provides
+        @Singleton
+        fun providesFavMovieDao(database: Database): FavMovieDao{
+            return database.createFavMovie()
         }
     }
 

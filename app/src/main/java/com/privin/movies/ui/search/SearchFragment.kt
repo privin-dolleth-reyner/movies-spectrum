@@ -25,27 +25,24 @@ class SearchFragment : MovieListFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loader.isVisible = false
         observeData()
-        initSearchInput()
-        initBack()
-    }
-    private fun initBack(){
-        binding.back.apply {
-            isVisible = true
-            setOnClickListener {
-                activity?.finish()
-            }
-        }
+        initSearchBar()
     }
 
-    private fun initSearchInput(){
+    private fun initSearchBar(){
+        binding.searchBar.visibility = View.VISIBLE
         binding.searchInput.apply {
-            isVisible = true
             requestFocus()
             doOnTextChanged { text, _, _, _ ->
                 viewModel.searchQuery = text.toString()
                 viewModel.page = 1L
 
                 viewModel.searchMovies(viewModel.searchQuery, viewModel.page)
+            }
+        }
+
+        binding.back.apply {
+            setOnClickListener {
+                activity?.finish()
             }
         }
     }
