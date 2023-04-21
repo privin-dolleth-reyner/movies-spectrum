@@ -59,7 +59,7 @@ class RepoImpl @Inject constructor(
         return server.searchMovies(searchQuery, page)
     }
 
-    override suspend fun getFavMovies(): List<FavMovieEntity> {
+    override suspend fun getFavMovies(): Flow<List<FavMovieEntity>> {
         return favMovieDao.getAllFavMovies()
     }
 

@@ -1,6 +1,7 @@
 package com.privin.movies.data.local
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavMovieDao {
@@ -9,7 +10,7 @@ interface FavMovieDao {
     fun insert(favMovieEntity: FavMovieEntity)
 
     @Query("select * from FavMovieEntity")
-    fun getAllFavMovies(): List<FavMovieEntity>
+    fun getAllFavMovies(): Flow<List<FavMovieEntity>>
     @Query("delete from FavMovieEntity where id=:id")
     fun removeFromFav(id: Long)
     @Query("select COUNT(id) from FavMovieEntity where id=:id")

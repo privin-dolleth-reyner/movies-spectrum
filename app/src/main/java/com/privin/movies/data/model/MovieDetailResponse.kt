@@ -13,9 +13,9 @@ data class MovieDetailResponse(
     @Json(name = "overview")
     val overview: String,
     @Json(name = "backdrop_path")
-    val backDropPath: String,
+    val backDropPath: String?,
     @Json(name = "poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @Json(name = "genres")
     val genres: List<Genre>,
     @Json(name = "budget")

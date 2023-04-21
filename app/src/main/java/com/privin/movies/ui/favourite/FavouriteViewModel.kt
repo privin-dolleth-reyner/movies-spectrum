@@ -31,8 +31,9 @@ class FavouriteViewModel @Inject constructor(
 
     fun getAllFavMovies(){
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            val movieList = getFavouriteMovies.get().execute()
-            _favouriteMovies.postValue(movieList)
+            getFavouriteMovies.get().execute().collect{
+                _favouriteMovies.postValue(it)
+            }
         }
     }
 }
