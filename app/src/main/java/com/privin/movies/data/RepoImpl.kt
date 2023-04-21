@@ -1,6 +1,8 @@
 package com.privin.movies.data
 
 import android.util.Log
+import com.privin.movies.data.local.FavMovieDao
+import com.privin.movies.data.local.FavMovieEntity
 import com.privin.movies.data.local.GenreDao
 import com.privin.movies.data.local.GenreEntity
 import com.privin.movies.data.model.Genre
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 class RepoImpl @Inject constructor(
     private var server: Server,
-    private var genreDao: GenreDao
+    private var genreDao: GenreDao,
+    private var favMovieDao: FavMovieDao
 ) : Repo {
     companion object {
         private const val TAG = "Repo"
@@ -54,6 +57,10 @@ class RepoImpl @Inject constructor(
 
     override suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse {
         return server.searchMovies(searchQuery, page)
+    }
+
+    override suspend fun getFavMovies(): List<FavMovieEntity> {
+        return favMovieDao.getAllFavMovies()
     }
 
     private suspend fun updateGenreDb(list: List<Genre>) {
