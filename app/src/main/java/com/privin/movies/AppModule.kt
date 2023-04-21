@@ -43,6 +43,17 @@ abstract class AppModule {
             it.proceed(newRequest)
         }
 
+        private val responseInterceptor = Interceptor{
+            val req = it.request()
+            val response = it.proceed(req)
+            return@Interceptor when {
+                response.isSuccessful && response.body != null -> response
+                response.code == 401 -> throw ApiError.UnAuthorized(response.message)
+                response.code == 404 -> throw ApiError.PageNotFound(response.message)
+                else -> throw ApiError.InternalError(response.message)
+            }
+        }
+
         @Provides
         @Singleton
         fun provideOkHttpClient(): OkHttpClient {
@@ -50,6 +61,7 @@ abstract class AppModule {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             return OkHttpClient.Builder()
                 .addInterceptor(authInterceptor)
+                .addInterceptor(responseInterceptor)
                 .addNetworkInterceptor(loggingInterceptor)
                 .build()
         }

@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface ApiClient {
 
-    @GET("movie/now_playing")
+    @GET("movie/now_playin")
     suspend fun getMoviesNowPlaying(@Query("page") page: Long): MovieResponse
     @GET("movie/popular")
     suspend fun getPopularMovies(@Query("page") page: Long): MovieResponse

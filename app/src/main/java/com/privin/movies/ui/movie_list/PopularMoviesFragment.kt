@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
 import com.privin.movies.model.Movie
 import com.privin.movies.ui.HomeViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class PopularMoviesFragment: MovieListFragment() {
 
@@ -35,6 +36,19 @@ class PopularMoviesFragment: MovieListFragment() {
 
     override fun loadMore() {
         viewModel.loadPopularMovies(viewModel.nextPagePopularMovies)
+    }
+
+    override suspend fun onError() {
+        viewModel.error.collectLatest {
+            binding.loader.isVisible = false
+            binding.errorText.text = it
+            binding.errorGrp.isVisible = true
+        }
+    }
+
+    override fun onRetry() {
+        viewModel.nextPagePopularMovies = 1L
+        viewModel.loadPopularMovies()
     }
 
 }
