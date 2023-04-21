@@ -63,6 +63,18 @@ class RepoImpl @Inject constructor(
         return favMovieDao.getAllFavMovies()
     }
 
+    override suspend fun addToFav(favMovieEntity: FavMovieEntity) {
+        return favMovieDao.insert(favMovieEntity)
+    }
+
+    override suspend fun removeFromFav(id: Long) {
+        return favMovieDao.removeFromFav(id)
+    }
+
+    override suspend fun isFavMovie(id: Long): Boolean {
+        return favMovieDao.isFavMovie(id) == 1
+    }
+
     private suspend fun updateGenreDb(list: List<Genre>) {
         coroutineScope {
             launch {

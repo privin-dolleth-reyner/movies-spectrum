@@ -15,4 +15,7 @@ interface Repo {
     suspend fun getMovieDetail(id: Long): MovieDetailResponse
     suspend fun searchMovies(searchQuery: String, page: Long): MovieResponse
     suspend fun getFavMovies(): List<FavMovieEntity>
+    suspend fun addToFav(favMovieEntity: FavMovieEntity)
+    suspend fun removeFromFav(id: Long)
+    suspend fun isFavMovie(id: Long): Boolean
 }

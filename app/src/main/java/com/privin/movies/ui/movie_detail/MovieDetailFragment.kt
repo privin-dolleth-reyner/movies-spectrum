@@ -21,6 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieDetailFragment : BottomSheetDialogFragment() {
 
+    companion object{
+        private const val TAG = "MovieDetailFragment"
+    }
     private lateinit var binding: FragmentMovieDetailBinding
 
     private lateinit var viewModel: MovieDetailViewModel
@@ -45,6 +48,9 @@ class MovieDetailFragment : BottomSheetDialogFragment() {
         setListeners()
         viewModel.movieDetail.observe(this) { movie ->
             display(movie)
+        }
+        viewModel.favMovie.observe(this){
+            binding.toggleFav.isChecked = it
         }
     }
 
@@ -78,6 +84,14 @@ class MovieDetailFragment : BottomSheetDialogFragment() {
             voteCount.text = Util.displayTextVotes(movie.voteCount)
             voteAvg.text = String.format("%.1f / 10", movie.voteAverage)
             status.text = getString(R.string.status, movie.status)
+            viewModel.isFavMovie(movie.id)
+            toggleFav.setOnCheckedChangeListener { _, fav ->
+                if (fav){
+                    viewModel.addToFavMovie(movie)
+                }else{
+                    viewModel.removeFromFavMovie(movie.id)
+                }
+            }
         }
     }
 
