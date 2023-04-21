@@ -85,7 +85,7 @@ class MovieListAdapter(
         holder.binding.apply {
             val genre = movie.genres?.joinToString(", ") ?: ""
             title.text = movie.title
-            voteAvg.text = movie.voteAverage.toString()
+            voteAvg.text = String.format("%.1f", movie.voteAverage)
             voteCount.text = Util.displayTextVotes(movie.voteCount)
             genres.text = genre
             releaseDate.text = getReleaseDate(movie)

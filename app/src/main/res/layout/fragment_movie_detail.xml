@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             android:paddingVertical="4dp"
+            android:layout_marginEnd="30dp"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             app:layout_constraintEnd_toEndOf="@id/end_guide"
             app:layout_constraintHorizontal_bias="0"
