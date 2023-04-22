@@ -27,7 +27,7 @@ class UpComingMoviesFragment: MovieListFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
             movieAdapter.addMovieList(it)
         }
     }
@@ -38,7 +38,7 @@ class UpComingMoviesFragment: MovieListFragment() {
 
     override suspend fun onError() {
         viewModel.error.collectLatest {
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
             bindingError.errorText.text = it
             bindingError.errorGrp.isVisible = true
         }

@@ -24,7 +24,7 @@ class SearchFragment : MovieListFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loader.isVisible = false
+        bindingLoader.loaderGrp.isVisible = false
         observeData()
         initSearchBar()
     }
@@ -55,7 +55,7 @@ class SearchFragment : MovieListFragment() {
                 movieAdapter.updateMovieList(it)
                 scrollToTop()
             }
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
         }
     }
 
@@ -66,7 +66,7 @@ class SearchFragment : MovieListFragment() {
 
     override suspend fun onError() {
         viewModel.error.collectLatest {
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
             bindingError.errorText.text = it
             bindingError.errorGrp.isVisible = true
         }

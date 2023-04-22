@@ -8,50 +8,34 @@
 
 
     <View
-        android:id="@+id/error_bg"
+        android:id="@+id/bg"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:elevation="2dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/white"/>
+        android:background="@android:color/transparent"/>
 
-    <TextView
-        android:id="@+id/error_text"
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/err"
-        android:gravity="center"
-        android:elevation="6dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:indeterminate="true"
+        android:indeterminateBehavior="cycle"
+        app:indicatorColor="@color/red"
+        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/retry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/retry"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/black"
-        app:cornerRadius="4dp"
-        android:elevation="8dp"
-        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/error_text" />
-
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/error_grp"
+        android:id="@+id/loader_grp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:visibility="visible"
-        android:visibility="gone"
-        app:constraint_referenced_ids="error_text, retry, error_bg"/>
+        android:visibility="visible"
+        app:constraint_referenced_ids="loader, bg"/>
 
 </merge>

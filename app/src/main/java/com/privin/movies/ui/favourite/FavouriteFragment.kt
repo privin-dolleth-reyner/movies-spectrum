@@ -25,7 +25,7 @@ class FavouriteFragment : MovieListFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.favouriteMovies.observe(requireActivity()) {
             binding.emptyView.isVisible = it.isEmpty()
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
             movieAdapter.updateMovieList(it)
         }
     }
@@ -36,7 +36,7 @@ class FavouriteFragment : MovieListFragment() {
 
     override suspend fun onError() {
         viewModel.error.collectLatest {
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
             bindingError.errorText.text = it
             bindingError.errorGrp.isVisible = true
         }
