@@ -41,8 +41,8 @@ class PopularMoviesFragment: MovieListFragment() {
     override suspend fun onError() {
         viewModel.error.collectLatest {
             binding.loader.isVisible = false
-            binding.errorText.text = it
-            binding.errorGrp.isVisible = true
+            bindingError.errorText.text = it
+            bindingError.errorGrp.isVisible = true
         }
     }
 

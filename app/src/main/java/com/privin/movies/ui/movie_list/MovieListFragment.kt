@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privin.movies.databinding.FragmentMovieListBinding
+import com.privin.movies.databinding.ViewErrorBinding
 import com.privin.movies.model.Movie
 import com.privin.movies.ui.movie_detail.MovieDetailFragment
 import kotlinx.coroutines.flow.collectLatest
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 abstract class MovieListFragment : Fragment() {
 
     protected lateinit var binding: FragmentMovieListBinding
+    protected lateinit var bindingError: ViewErrorBinding
 
     protected lateinit var movieAdapter: MovieListAdapter
 
@@ -42,15 +44,16 @@ abstract class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        bindingError = ViewErrorBinding.bind(binding.root)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
-        binding.retry.setOnClickListener {
+        bindingError.retry.setOnClickListener {
             binding.loader.isVisible = true
-            binding.errorGrp.isVisible = false
+            bindingError.errorGrp.isVisible = false
             onRetry()
         }
     }
