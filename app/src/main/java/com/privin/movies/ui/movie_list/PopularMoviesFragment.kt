@@ -6,23 +6,21 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
-import com.privin.movies.model.Movie
-import com.privin.movies.ui.HomeViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 class PopularMoviesFragment: MovieListFragment() {
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: PopularMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[PopularMoviesViewModel::class.java]
         viewModel.loadPopularMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.popularMovies.observe(requireActivity()) {
-            if (viewModel.nextPagePopularMovies > 1 && it.isEmpty()) {
+        viewModel.movies.observe(requireActivity()) {
+            if (viewModel.nextPage > 1 && it.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.end_of_list),
@@ -35,7 +33,7 @@ class PopularMoviesFragment: MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadPopularMovies(viewModel.nextPagePopularMovies)
+        viewModel.loadPopularMovies(viewModel.nextPage)
     }
 
     override suspend fun onError() {
@@ -47,7 +45,7 @@ class PopularMoviesFragment: MovieListFragment() {
     }
 
     override fun onRetry() {
-        viewModel.nextPagePopularMovies = 1L
+        viewModel.nextPage = 1L
         viewModel.loadPopularMovies()
     }
 

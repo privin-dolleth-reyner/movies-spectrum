@@ -6,23 +6,21 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
-import com.privin.movies.model.Movie
-import com.privin.movies.ui.HomeViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 class UpComingMoviesFragment: MovieListFragment() {
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: UpcomingMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[UpcomingMoviesViewModel::class.java]
         viewModel.loadUpcomingMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.upcomingMovies.observe(requireActivity()) {
-            if (viewModel.nextPagePopularMovies > 1 && it.isEmpty()) {
+        viewModel.movies.observe(requireActivity()) {
+            if (viewModel.nextPage > 1 && it.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.end_of_list),
@@ -35,7 +33,7 @@ class UpComingMoviesFragment: MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadUpcomingMovies(viewModel.nextPageUpcomingMovies)
+        viewModel.loadUpcomingMovies(viewModel.nextPage)
     }
 
     override suspend fun onError() {
@@ -47,7 +45,7 @@ class UpComingMoviesFragment: MovieListFragment() {
     }
 
     override fun onRetry() {
-        viewModel.nextPageUpcomingMovies = 1L
+        viewModel.nextPage = 1L
         viewModel.loadUpcomingMovies()
     }
 

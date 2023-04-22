@@ -11,7 +11,6 @@ import com.privin.movies.domain.IsFavMovie
 import com.privin.movies.domain.RemoveFromFavMovie
 import com.privin.movies.isInternetConnected
 import com.privin.movies.model.MovieDetail
-import com.privin.movies.ui.HomeViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -48,7 +47,7 @@ class MovieDetailViewModel @Inject constructor(
     val error: SharedFlow<String> = _error
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(HomeViewModel.TAG, "Coroutine exception: $throwable")
+        Log.e(TAG, "Coroutine exception: $throwable")
         viewModelScope.launch {
             when(throwable){
                 is ApiError.UnAuthorized -> _error.emit(context.get().getString(R.string.err_401))

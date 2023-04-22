@@ -1,36 +1,26 @@
 package com.privin.movies.ui.movie_list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.privin.movies.R
-import com.privin.movies.model.Movie
-import com.privin.movies.ui.HomeActivity
-import com.privin.movies.ui.HomeViewModel
-import com.privin.movies.ui.movie_detail.MovieDetailFragment
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class NowPlayingFragment : MovieListFragment() {
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: NowPlayingViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[NowPlayingViewModel::class.java]
         viewModel.loadNowPlaying()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.nowPlayingMovies.observe(requireActivity()) {
-            if (viewModel.nextPageNowPlaying > 1 && it.isEmpty()) {
+        viewModel.movies.observe(requireActivity()) {
+            if (viewModel.nextPage > 1 && it.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.end_of_list),
@@ -43,7 +33,7 @@ class NowPlayingFragment : MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadNowPlaying(viewModel.nextPageNowPlaying)
+        viewModel.loadNowPlaying(viewModel.nextPage)
     }
 
     override suspend fun onError() {
@@ -55,7 +45,7 @@ class NowPlayingFragment : MovieListFragment() {
     }
 
     override fun onRetry() {
-        viewModel.nextPageNowPlaying = 1L
+        viewModel.nextPage = 1L
         viewModel.loadNowPlaying()
     }
 

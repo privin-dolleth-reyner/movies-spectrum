@@ -1,4 +1,4 @@
-package com.privin.movies.ui.search
+package com.privin.movies.ui.movie_list
 
 import android.content.Context
 import android.util.Log
@@ -8,38 +8,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.privin.movies.ApiError
 import com.privin.movies.R
-import com.privin.movies.domain.SearchMovies
 import com.privin.movies.isInternetConnected
 import com.privin.movies.model.Movie
-import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class SearchViewModel @Inject constructor(
-    private val searchMovies: dagger.Lazy<SearchMovies>,
+abstract class MovieListViewModel constructor(
     @ApplicationContext private val context: dagger.Lazy<Context>,
-) : ViewModel() {
-    companion object {
-        private const val TAG = "SearchViewModel"
-    }
+): ViewModel() {
 
-    private val _searchResultMovies: MutableLiveData<List<Movie>> = MutableLiveData()
-    val searchResultMovies: LiveData<List<Movie>> = _searchResultMovies
 
-    private val _error: MutableSharedFlow<String> = MutableSharedFlow()
+    protected val _movies: MutableLiveData<List<Movie>> = MutableLiveData()
+    val movies: LiveData<List<Movie>> = _movies
+
+    protected val _error: MutableSharedFlow<String> = MutableSharedFlow()
     val error: SharedFlow<String> = _error
 
-    var page = 1L
-    var searchQuery = ""
+    var nextPage = 1L
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(TAG, "Coroutine exception: $throwable")
+    protected val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(this::class.simpleName, "Coroutine exception: $throwable")
         viewModelScope.launch {
             when(throwable){
                 is ApiError.UnAuthorized -> _error.emit(context.get().getString(R.string.err_401))
@@ -54,11 +45,4 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun searchMovies(searchQuery: String, page: Long = 1) {
-        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            val result = searchMovies.get().execute(searchQuery, page)
-            val movieList = result.first
-            _searchResultMovies.postValue(movieList)
-        }
-    }
 }

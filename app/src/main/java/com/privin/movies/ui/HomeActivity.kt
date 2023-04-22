@@ -17,8 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: HomeViewModel
-
     private lateinit var binding: ActivityHomeBinding
 
     private lateinit var currentFragment: MovieListFragment
@@ -38,7 +36,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         setContentView(binding.root)
         setCurrentFragment(nowPlayingFragment, NOW_PLAYING_TAG)
         setListeners()
