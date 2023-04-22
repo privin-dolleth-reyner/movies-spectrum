@@ -1,4 +1,4 @@
-package com.privin.movies.ui.movie_list
+package com.privin.movies.ui.now_playing
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
+import com.privin.movies.ui.movie_list.MovieListFragment
 import kotlinx.coroutines.flow.collectLatest
 
 class NowPlayingFragment : MovieListFragment() {

@@ -2,16 +2,18 @@ package com.privin.movies.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
 import com.privin.movies.databinding.ActivityHomeBinding
 import com.privin.movies.ui.favourite.FavouriteActivity
 import com.privin.movies.ui.movie_list.*
+import com.privin.movies.ui.now_playing.NowPlayingFragment
+import com.privin.movies.ui.popular.PopularMoviesFragment
 import com.privin.movies.ui.search.SearchActivity
+import com.privin.movies.ui.top_rated.TopRatedMoviesFragment
+import com.privin.movies.ui.upcoming.UpComingMoviesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.privin.movies.ui.movie_list
+package com.privin.movies.ui.popular
 
 import android.os.Bundle
 import android.view.View
@@ -6,15 +6,16 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.R
+import com.privin.movies.ui.movie_list.MovieListFragment
 import kotlinx.coroutines.flow.collectLatest
 
-class UpComingMoviesFragment: MovieListFragment() {
+class PopularMoviesFragment: MovieListFragment() {
 
-    private lateinit var viewModel: UpcomingMoviesViewModel
+    private lateinit var viewModel: PopularMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[UpcomingMoviesViewModel::class.java]
-        viewModel.loadUpcomingMovies()
+        viewModel = ViewModelProvider(requireActivity())[PopularMoviesViewModel::class.java]
+        viewModel.loadPopularMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,7 +34,7 @@ class UpComingMoviesFragment: MovieListFragment() {
     }
 
     override fun loadMore() {
-        viewModel.loadUpcomingMovies(viewModel.nextPage)
+        viewModel.loadPopularMovies(viewModel.nextPage)
     }
 
     override suspend fun onError() {
@@ -46,7 +47,7 @@ class UpComingMoviesFragment: MovieListFragment() {
 
     override fun onRetry() {
         viewModel.nextPage = 1L
-        viewModel.loadUpcomingMovies()
+        viewModel.loadPopularMovies()
     }
 
 }

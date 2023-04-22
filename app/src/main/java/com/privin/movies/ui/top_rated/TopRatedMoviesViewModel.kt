@@ -1,11 +1,9 @@
-package com.privin.movies.ui.movie_list
+package com.privin.movies.ui.top_rated
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
-import com.privin.movies.domain.GetMoviesPlayingNow
-import com.privin.movies.domain.GetPopularMovies
 import com.privin.movies.domain.GetTopRatedMovies
-import com.privin.movies.domain.GetUpComingMovies
+import com.privin.movies.ui.movie_list.MovieListViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
