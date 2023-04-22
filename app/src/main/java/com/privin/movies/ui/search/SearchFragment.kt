@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.privin.movies.ui.movie_list.MovieListFragment
+import kotlinx.coroutines.flow.collectLatest
 
 class SearchFragment : MovieListFragment() {
 
@@ -23,7 +24,7 @@ class SearchFragment : MovieListFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loader.isVisible = false
+        bindingLoader.loaderGrp.isVisible = false
         observeData()
         initSearchBar()
     }
@@ -54,12 +55,25 @@ class SearchFragment : MovieListFragment() {
                 movieAdapter.updateMovieList(it)
                 scrollToTop()
             }
-            binding.loader.isVisible = false
+            bindingLoader.loaderGrp.isVisible = false
         }
     }
 
     override fun loadMore() {
         viewModel.page += 1
+        viewModel.searchMovies(viewModel.searchQuery, viewModel.page)
+    }
+
+    override suspend fun onError() {
+        viewModel.error.collectLatest {
+            bindingLoader.loaderGrp.isVisible = false
+            bindingError.errorText.text = it
+            bindingError.errorGrp.isVisible = true
+        }
+    }
+
+    override fun onRetry() {
+        viewModel.page = 1L
         viewModel.searchMovies(viewModel.searchQuery, viewModel.page)
     }
 }

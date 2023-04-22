@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,8 +17,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.privin.movies.R
 import com.privin.movies.Util
 import com.privin.movies.databinding.FragmentMovieDetailBinding
+import com.privin.movies.databinding.ViewErrorBinding
+import com.privin.movies.databinding.ViewLoaderBinding
 import com.privin.movies.model.MovieDetail
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -25,6 +32,8 @@ class MovieDetailFragment : BottomSheetDialogFragment() {
         private const val TAG = "MovieDetailFragment"
     }
     private lateinit var binding: FragmentMovieDetailBinding
+    private lateinit var bindingError: ViewErrorBinding
+    private lateinit var bindingLoader: ViewLoaderBinding
 
     private lateinit var viewModel: MovieDetailViewModel
 
@@ -40,20 +49,37 @@ class MovieDetailFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
+        bindingError = ViewErrorBinding.bind(binding.root)
+        bindingLoader = ViewLoaderBinding.bind(binding.root)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        observeError()
         viewModel.movieDetail.observe(this) { movie ->
             display(movie)
         }
         viewModel.favMovie.observe(this){
             binding.toggleFav.isChecked = it
         }
+        bindingError.retry.setOnClickListener {
+            bindingLoader.loaderGrp.isVisible = true
+            viewModel.loadMovieDetail()
+        }
     }
-
+    private fun observeError() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.error.collectLatest {
+                    bindingLoader.loaderGrp.isVisible = false
+                    bindingError.errorText.text = it
+                    bindingError.errorGrp.isVisible = true
+                }
+            }
+        }
+    }
     private fun setListeners() {
         dialog?.setOnShowListener { dialog ->
             val d = dialog as BottomSheetDialog
@@ -70,6 +96,7 @@ class MovieDetailFragment : BottomSheetDialogFragment() {
 
     private fun display(movie: MovieDetail) {
         binding.apply {
+            bindingLoader.loaderGrp.isVisible = false
             title.text = movie.title
             Glide.with(requireContext())
                 .load(movie.getBackDropUrl())

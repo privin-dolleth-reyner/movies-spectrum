@@ -1,37 +1,40 @@
-package com.privin.movies.ui.favourite
+package com.privin.movies.ui.now_playing
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.privin.movies.R
 import com.privin.movies.ui.movie_list.MovieListFragment
 import kotlinx.coroutines.flow.collectLatest
 
-class FavouriteFragment : MovieListFragment() {
+class NowPlayingFragment : MovieListFragment() {
 
-    companion object {
-        const val TAG = "FavouriteFragment"
-    }
-
-    lateinit var viewModel: FavouriteViewModel
-
+    private lateinit var viewModel: NowPlayingViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[FavouriteViewModel::class.java]
-        viewModel.getAllFavMovies()
+        viewModel = ViewModelProvider(requireActivity())[NowPlayingViewModel::class.java]
+        viewModel.loadNowPlaying()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.favouriteMovies.observe(requireActivity()) {
-            binding.emptyView.isVisible = it.isEmpty()
+        viewModel.movies.observe(requireActivity()) {
+            if (viewModel.nextPage > 1 && it.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.end_of_list),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             bindingLoader.loaderGrp.isVisible = false
-            movieAdapter.updateMovieList(it)
+            movieAdapter.addMovieList(it)
         }
     }
 
     override fun loadMore() {
-        // do nothing
+        viewModel.loadNowPlaying(viewModel.nextPage)
     }
 
     override suspend fun onError() {
@@ -43,6 +46,9 @@ class FavouriteFragment : MovieListFragment() {
     }
 
     override fun onRetry() {
-        viewModel.getAllFavMovies()
+        viewModel.nextPage = 1L
+        viewModel.loadNowPlaying()
     }
+
+
 }

@@ -4,16 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privin.movies.databinding.FragmentMovieListBinding
+import com.privin.movies.databinding.ViewErrorBinding
+import com.privin.movies.databinding.ViewLoaderBinding
 import com.privin.movies.model.Movie
 import com.privin.movies.ui.movie_detail.MovieDetailFragment
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 abstract class MovieListFragment : Fragment() {
 
     protected lateinit var binding: FragmentMovieListBinding
+    protected lateinit var bindingError: ViewErrorBinding
+    protected lateinit var bindingLoader: ViewLoaderBinding
 
     protected lateinit var movieAdapter: MovieListAdapter
 
@@ -27,6 +37,7 @@ abstract class MovieListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movieAdapter = MovieListAdapter(onItemClickListener = onClickMovieItem)
+        observeError()
     }
 
     override fun onCreateView(
@@ -35,12 +46,19 @@ abstract class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        bindingError = ViewErrorBinding.bind(binding.root)
+        bindingLoader = ViewLoaderBinding.bind(binding.root)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+        bindingError.retry.setOnClickListener {
+            bindingLoader.loaderGrp.isVisible = true
+            bindingError.errorGrp.isVisible = false
+            onRetry()
+        }
     }
 
     fun scrollToTop() {
@@ -64,4 +82,14 @@ abstract class MovieListFragment : Fragment() {
     }
 
     abstract fun loadMore()
+
+    abstract suspend fun onError()
+    abstract fun onRetry()
+    private fun observeError() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                onError()
+            }
+        }
+    }
 }
